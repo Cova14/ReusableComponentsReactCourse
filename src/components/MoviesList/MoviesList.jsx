@@ -10,7 +10,7 @@ class MoviesList extends Component {
                 {
                     title: 'Cars',
                     img: 'https://r1.abcimg.es/resizer/resizer.php?imagen=https%3A%2F%2Fstatic1.abc.es%2Fmedia%2Fpeliculas%2F000%2F019%2F042%2Fcars-2.jpg&nuevoancho=620&medio=abc',
-                    description: 'Es una película de carros que hablan para niños',
+                    description: 'Es una película de carros que hablan para niños Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem ex velit totam dolorem exercitationem obcaecati laborum voluptatibus iusto fugit laboriosam excepturi quo, eius fuga, unde, dicta deserunt atque amet minima!',
                     characters: [
                         {
                             name: 'Rayo Macuin',
