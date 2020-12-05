@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import MovieDetail from '../MovieDetail/'
+import MovieForm from '../MovieForm/'
 
 class MoviesList extends Component {
 
@@ -47,14 +48,52 @@ class MoviesList extends Component {
                     description: 'Pollos que intentan huir',
                     characters: []
                 }
-            ]
+            ],
+            newMovie: {
+                title: '',
+                img: '',
+                description: ''
+            }
         }
+    }
+
+    handleChangeTitle = (event) => {
+        this.setState({
+            newMovie: { ...this.state.newMovie, title: event.target.value }
+        })
+    }
+
+    handleChangeImg = (event) => {
+        this.setState({
+            newMovie: { ...this.state.newMovie, img: event.target.value }
+        })
+    }
+
+    handleChangeDesc = (event) => {
+        this.setState({
+            newMovie: { ...this.state.newMovie, description: event.target.value }
+        })
+    }
+
+    handleAddMovie = (event) => {
+        event.preventDefault()
+        const { movies, newMovie } = this.state
+        newMovie.characters = []
+        movies.push(newMovie)
+        this.setState({ movies })
     }
 
     render() {
         const { movies } = this.state
         return (
             <>
+                <MovieForm
+                    handleChangeTitle={this.handleChangeTitle}
+                    handleChangeImg={this.handleChangeImg}
+                    handleChangeDesc={this.handleChangeDesc}
+                    handleAddMovie={this.handleAddMovie}
+                    form={this.state.newMovie}
+                />
                 {movies.map(movie =>
                     <MovieDetail movie={movie} />
                 )}
