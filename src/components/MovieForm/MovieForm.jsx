@@ -7,24 +7,24 @@ export default function MovieForm(props) {
                 name="title"
                 id="title"
                 placeholder="Título"
-                onChange={props.handleChangeTitle}
+                onChange={props.handleChangeNewMovie}
                 value={props.form.title}
             />
             <input
                 type="text"
-                name="photo"
+                name="img"
                 id="photo"
                 placeholder="URL de la imagen"
-                onChange={props.handleChangeImg}
+                onChange={props.handleChangeNewMovie}
                 value={props.form.img}
             />
             <textarea
                 name="description"
                 id="description"
-                onChange={props.handleChangeDesc}
+                onChange={props.handleChangeNewMovie}
                 value={props.form.description}
             />
             <button onClick={props.handleAddMovie}>Agregar película</button>
         </>
     )
-}
+} 

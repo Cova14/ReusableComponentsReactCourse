@@ -57,21 +57,30 @@ class MoviesList extends Component {
         }
     }
 
-    handleChangeTitle = (event) => {
-        this.setState({
-            newMovie: { ...this.state.newMovie, title: event.target.value }
-        })
-    }
+    // handleChangeTitle = (event) => {
+    //     this.setState({
+    //         newMovie: { ...this.state.newMovie, title: event.target.value }
+    //     })
+    // }
 
-    handleChangeImg = (event) => {
-        this.setState({
-            newMovie: { ...this.state.newMovie, img: event.target.value }
-        })
-    }
+    // handleChangeImg = (event) => {
+    //     this.setState({
+    //         newMovie: { ...this.state.newMovie, img: event.target.value }
+    //     })
+    // }
 
-    handleChangeDesc = (event) => {
+    // handleChangeDesc = (event) => {
+    //     this.setState({
+    //         newMovie: { ...this.state.newMovie, description: event.target.value }
+    //     })
+    // }
+
+    // object.property
+    // object['property']
+
+    handleChangeNewMovie = (event) => {
         this.setState({
-            newMovie: { ...this.state.newMovie, description: event.target.value }
+            newMovie: { ...this.state.newMovie, [event.target.name]: event.target.value }
         })
     }
 
@@ -88,9 +97,10 @@ class MoviesList extends Component {
         return (
             <>
                 <MovieForm
-                    handleChangeTitle={this.handleChangeTitle}
-                    handleChangeImg={this.handleChangeImg}
-                    handleChangeDesc={this.handleChangeDesc}
+                    // handleChangeTitle={this.handleChangeTitle}
+                    // handleChangeImg={this.handleChangeImg}
+                    // handleChangeDesc={this.handleChangeDesc}
+                    handleChangeNewMovie={this.handleChangeNewMovie}
                     handleAddMovie={this.handleAddMovie}
                     form={this.state.newMovie}
                 />
