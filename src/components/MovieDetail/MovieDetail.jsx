@@ -1,7 +1,7 @@
 import CharacterDetail from '../CharacterDetail';
 import './styles.css'
 
-export default function MovieDetail({ movie }) {
+export default function MovieDetail({ movie, index, handleUpdateMovie }) {
     return (
         <div className='movie-detail-container'>
             <div className='details-container'>
@@ -14,14 +14,15 @@ export default function MovieDetail({ movie }) {
                     <p>{movie.description}</p>
                 </div>
             </div>
-        
+
             <h2>Lista de personajes</h2>
             <div className='characters-container'>
-                { movie.characters.length > 0 ? movie.characters.map(character => 
-                    <CharacterDetail character = { character } />
-                
-                ): <p> No ay nada aki karnal ira  </p>   } 
-            </div> 
+                { movie.characters.length > 0 ? movie.characters.map((character, index) =>
+                    <CharacterDetail character={character} key={index} />
+
+                ): <p> No ay nada aki karnal ira  </p>   }
+            </div>
+            <button onClick={() => handleUpdateMovie(index)}>Editar película</button>
         </div>
     )
 }

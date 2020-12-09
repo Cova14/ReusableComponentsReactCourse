@@ -53,30 +53,10 @@ class MoviesList extends Component {
                 title: '',
                 img: '',
                 description: ''
-            }
+            },
+            isUpdating: false
         }
     }
-
-    // handleChangeTitle = (event) => {
-    //     this.setState({
-    //         newMovie: { ...this.state.newMovie, title: event.target.value }
-    //     })
-    // }
-
-    // handleChangeImg = (event) => {
-    //     this.setState({
-    //         newMovie: { ...this.state.newMovie, img: event.target.value }
-    //     })
-    // }
-
-    // handleChangeDesc = (event) => {
-    //     this.setState({
-    //         newMovie: { ...this.state.newMovie, description: event.target.value }
-    //     })
-    // }
-
-    // object.property
-    // object['property']
 
     setInitialState = () => {
         this.setState({
@@ -96,17 +76,15 @@ class MoviesList extends Component {
 
     handleValidateInput = () => {
         const { title, img, description } = this.state.newMovie;
-
-        if(title && img && description) {
-            if(this.handleRepeatedMovie()) {
-                alert('Ya existe la pelicula nmms pinche piratería ta kabrona');
-                return false;
-            }
-            return true;
-        } else {
-            alert('Todos los campos son requeridos');
-            return false;
+        if (!title || !img || !description) {
+            alert('Todos los campos son requeridos')
+            return false
         }
+        if (!this.handleRepeatedMovie()) {
+            alert('Ya existe la pelicula nmms pinche piratería ta kabrona');
+            return false
+        }
+        return true
 
     }
 
@@ -129,20 +107,36 @@ class MoviesList extends Component {
         }
     }
 
+    handleUpdateMovie = (index) => {
+        const { movies } = this.state
+        const movie = movies[index]
+        this.setState({
+            newMovie: {
+                title: movie.title,
+                img: movie.img,
+                description: movie.description
+            },
+            isUpdating: true
+        })
+    }
+
     render() {
         const { movies } = this.state
         return (
             <>
                 <MovieForm
-                    // handleChangeTitle={this.handleChangeTitle}
-                    // handleChangeImg={this.handleChangeImg}
-                    // handleChangeDesc={this.handleChangeDesc}
                     handleChangeNewMovie={this.handleChangeNewMovie}
                     handleAddMovie={this.handleAddMovie}
                     form={this.state.newMovie}
+                    isUpdating={this.state.isUpdating}
                 />
-                {movies.map(movie =>
-                    <MovieDetail movie={movie} />
+                {movies.map((movie, index) =>
+                    <MovieDetail
+                        movie={movie}
+                        key={index}
+                        index={index}
+                        handleUpdateMovie={this.handleUpdateMovie}
+                    />
                 )}
             </>
         )
