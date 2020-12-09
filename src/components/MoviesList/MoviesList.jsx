@@ -78,6 +78,38 @@ class MoviesList extends Component {
     // object.property
     // object['property']
 
+    setInitialState = () => {
+        this.setState({
+            newMovie: {
+                title: '',
+                img: '',
+                description: ''
+            }
+        });
+    }
+
+    handleRepeatedMovie = () => {
+        return this.state.movies.some(movie =>
+            movie.title.toLowerCase().trim() === this.state.newMovie.title.toLowerCase().trim()
+        )
+    }
+
+    handleValidateInput = () => {
+        const { title, img, description } = this.state.newMovie;
+
+        if(title && img && description) {
+            if(this.handleRepeatedMovie()) {
+                alert('Ya existe la pelicula nmms pinche piratería ta kabrona');
+                return false;
+            }
+            return true;
+        } else {
+            alert('Todos los campos son requeridos');
+            return false;
+        }
+
+    }
+
     handleChangeNewMovie = (event) => {
         this.setState({
             newMovie: { ...this.state.newMovie, [event.target.name]: event.target.value }
@@ -86,10 +118,15 @@ class MoviesList extends Component {
 
     handleAddMovie = (event) => {
         event.preventDefault()
-        const { movies, newMovie } = this.state
-        newMovie.characters = []
-        movies.push(newMovie)
-        this.setState({ movies })
+        const isValidated = this.handleValidateInput();
+        if (isValidated) {
+            const { movies, newMovie } = this.state;
+            newMovie.characters = [];
+            movies.push(newMovie);
+            this.setState({ movies });
+            alert('Tu pelicula se agregó');
+            this.setInitialState();
+        }
     }
 
     render() {
