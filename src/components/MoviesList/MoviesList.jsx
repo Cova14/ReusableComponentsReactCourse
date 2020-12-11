@@ -54,11 +54,12 @@ class MoviesList extends Component {
                 img: '',
                 description: ''
             },
-            isUpdating: false
+            isUpdating: false,
+            index: null
         }
     }
 
-    setInitialState = () => {
+    clearInputs = () => {
         this.setState({
             newMovie: {
                 title: '',
@@ -68,11 +69,11 @@ class MoviesList extends Component {
         });
     }
 
-    handleRepeatedMovie = () => {
-        return this.state.movies.some(movie =>
-            movie.title.toLowerCase().trim() === this.state.newMovie.title.toLowerCase().trim()
-        )
-    }
+    formatTitle = (title) => title.toLowerCase().trim()
+
+    isRepeatedMovie = () => this.state.movies.some(movie =>
+        this.formatTitle(movie.title) === this.formatTitle(this.state.newMovie.title)
+    )
 
     handleValidateInput = () => {
         const { title, img, description } = this.state.newMovie;
@@ -80,21 +81,23 @@ class MoviesList extends Component {
             alert('Todos los campos son requeridos')
             return false
         }
-        if (!this.handleRepeatedMovie()) {
+        if (this.isRepeatedMovie()) {
             alert('Ya existe la pelicula nmms pinche piratería ta kabrona');
             return false
         }
         return true
-
     }
 
-    handleChangeNewMovie = (event) => {
+    handleChangeNewMovie = event => {
         this.setState({
-            newMovie: { ...this.state.newMovie, [event.target.name]: event.target.value }
+            newMovie: {
+                ...this.state.newMovie,
+                [event.target.name]: event.target.value
+            }
         })
     }
 
-    handleAddMovie = (event) => {
+    handleAddMovie = event => {
         event.preventDefault()
         const isValidated = this.handleValidateInput();
         if (isValidated) {
@@ -103,11 +106,11 @@ class MoviesList extends Component {
             movies.push(newMovie);
             this.setState({ movies });
             alert('Tu pelicula se agregó');
-            this.setInitialState();
+            this.clearInputs();
         }
     }
 
-    handleUpdateMovie = (index) => {
+    handleSelectMovie = index => {
         const { movies } = this.state
         const movie = movies[index]
         this.setState({
@@ -116,8 +119,29 @@ class MoviesList extends Component {
                 img: movie.img,
                 description: movie.description
             },
-            isUpdating: true
+            isUpdating: true,
+            index: index
         })
+    }
+
+    handleUpdateMovie = index => {
+        const { movies, newMovie } = this.state
+        const movie = movies[index]
+        movies[index] = Object.assign(movie, newMovie)
+        this.setState({
+            movies,
+            index: null,
+            isUpdating: false
+        })
+        this.clearInputs()
+    }
+
+    handleDeleteMovie = index => {
+        if (window.confirm('¿Estás seguro de eliminar esta movie?')) {
+            const { movies } = this.state
+            movies.splice(index, 1)
+            this.setState({ movies })
+        }
     }
 
     render() {
@@ -127,17 +151,26 @@ class MoviesList extends Component {
                 <MovieForm
                     handleChangeNewMovie={this.handleChangeNewMovie}
                     handleAddMovie={this.handleAddMovie}
+                    handleUpdateMovie={this.handleUpdateMovie}
                     form={this.state.newMovie}
                     isUpdating={this.state.isUpdating}
+                    index={this.state.index}
                 />
-                {movies.map((movie, index) =>
-                    <MovieDetail
-                        movie={movie}
-                        key={index}
-                        index={index}
-                        handleUpdateMovie={this.handleUpdateMovie}
-                    />
-                )}
+                {movies.length > 0 ?
+                    movies.map((movie, index) =>
+                        <MovieDetail
+                            movie={movie}
+                            key={index}
+                            index={index}
+                            handleSelectMovie={this.handleSelectMovie}
+                            handleDeleteMovie={this.handleDeleteMovie}
+                        />
+                    )
+                    : <img
+                        src="https://vinoroc.com/static/app/images/no-record-found.76d6bd93c23b.gif"
+                        alt="Nohay"
+                        />
+                }
             </>
         )
     }
