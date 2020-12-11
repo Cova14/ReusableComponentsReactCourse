@@ -1,2 +1,2 @@
-import MoviesList from './MoviesList'
+import MoviesList from './MoviesListF'
 export default MoviesList
