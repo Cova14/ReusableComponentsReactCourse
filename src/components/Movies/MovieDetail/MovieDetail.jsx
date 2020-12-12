@@ -14,7 +14,7 @@ export default function MovieDetail({
     index,
     handleSelectMovie,
     handleDeleteMovie,
-    handleAddCharacter
+		handleAddCharacter
 }) {
     const [newCharacter, setNewCharacter] = useState(newCharacterInitialState)
 
@@ -27,7 +27,13 @@ export default function MovieDetail({
 
     const handleAddNewCharacter = () => {
         handleAddCharacter(newCharacter, index)
-    }
+		}
+
+		const handleUpdateNewCharacter = (characterIndex, character) => {
+			console.log(characterIndex)
+			console.log(character)
+			setNewCharacter(character)
+		}
 
     return (
         <div className='movie-detail-container'>
@@ -45,15 +51,19 @@ export default function MovieDetail({
             <h2>Lista de personajes</h2>
             <div className='characters-container'>
                 {movie.characters.length > 0
-                    ? movie.characters.map((character, index) =>
-                    <CharacterDetail character={character} key={index} />
+                    ? movie.characters.map((character, characterIndex) =>
+										<CharacterDetail
+											character={character}
+											key={characterIndex}
+											handleUpdateNewCharacter={() => handleUpdateNewCharacter(characterIndex, character)}
+										/>
 
                 ): <p> No ay nada aki karnal ira  </p>   }
             </div>
             <CharacterForm
                     form={newCharacter}
                     handleChangeNewCharacter={handleChangeNewCharacter}
-                    handleAddNewCharacter={handleAddNewCharacter}
+										handleAddNewCharacter={handleAddNewCharacter}
                 />
             <br />
             <br />

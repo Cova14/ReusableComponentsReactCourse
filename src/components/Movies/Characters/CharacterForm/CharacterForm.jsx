@@ -22,7 +22,7 @@ export default function CharacterForm(props) {
                 name="biography"
                 id="biography"
                 onChange={props.handleChangeNewCharacter}
-                value={props.form.description}
+                value={props.form.biography}
             />
             <button
                 onClick={props.handleAddNewCharacter}
