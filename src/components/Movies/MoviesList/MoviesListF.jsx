@@ -120,6 +120,12 @@ function MoviesList() {
         }
     }
 
+    const handleAddCharacter = (character, index) => {
+        const movies_ = [...movies]
+        movies_[index].characters.push(character)
+        setMovies(movies_)
+    }
+
     return (
         <>
             <MovieForm
@@ -137,6 +143,7 @@ function MoviesList() {
                         index={index}
                         handleSelectMovie={handleSelectMovie}
                         handleDeleteMovie={handleDeleteMovie}
+                        handleAddCharacter={handleAddCharacter}
                     />
                 )
                 : <img
