@@ -14,9 +14,12 @@ export default function MovieDetail({
     index,
     handleSelectMovie,
     handleDeleteMovie,
-		handleAddCharacter
+    handleAddCharacter,
+    handleUpdateCharacter,
+    handleDeleteCharacter
 }) {
     const [newCharacter, setNewCharacter] = useState(newCharacterInitialState)
+    const [characterIndex, setCharacterIndex] = useState(null)
 
     const handleChangeNewCharacter = event => {
         setNewCharacter({
@@ -29,11 +32,17 @@ export default function MovieDetail({
         handleAddCharacter(newCharacter, index)
 		}
 
-		const handleUpdateNewCharacter = (characterIndex, character) => {
-			console.log(characterIndex)
-			console.log(character)
-			setNewCharacter(character)
-		}
+    const handleSelectCharacter = (characterIndex, character) => {
+        setNewCharacter(character)
+        setCharacterIndex(characterIndex)
+    }
+
+    const handleUpdateNewCharacter = () => {
+        handleUpdateCharacter(newCharacter, characterIndex, index)
+        setNewCharacter(newCharacterInitialState)
+        setCharacterIndex(null)
+    }
+
 
     return (
         <div className='movie-detail-container'>
@@ -55,15 +64,18 @@ export default function MovieDetail({
 										<CharacterDetail
 											character={character}
 											key={characterIndex}
-											handleUpdateNewCharacter={() => handleUpdateNewCharacter(characterIndex, character)}
+                                            handleSelectCharacter={() => handleSelectCharacter(characterIndex, character)}
+                                            handleDeleteCharacter={() => handleDeleteCharacter(characterIndex, index)}
 										/>
 
                 ): <p> No ay nada aki karnal ira  </p>   }
             </div>
             <CharacterForm
                     form={newCharacter}
+                    index={characterIndex}
                     handleChangeNewCharacter={handleChangeNewCharacter}
-										handleAddNewCharacter={handleAddNewCharacter}
+                    handleAddNewCharacter={handleAddNewCharacter}
+                    handleUpdateCharacter={handleUpdateNewCharacter}
                 />
             <br />
             <br />

@@ -1,7 +1,10 @@
 export default function CharacterForm(props) {
+
+    const isUpdating = () => props.index >= 0
+
     return (
         <>
-            <h2>{props.index ? 'Edita' : 'Agrega'} un nuevo personaje</h2>
+            <h2>{isUpdating() ? 'Edita' : 'Agrega'} un nuevo personaje</h2>
             <input
                 type="text"
                 name="name"
@@ -25,9 +28,12 @@ export default function CharacterForm(props) {
                 value={props.form.biography}
             />
             <button
-                onClick={props.handleAddNewCharacter}
+                onClick={isUpdating()
+                    ? props.handleUpdateCharacter
+                    : props.handleAddNewCharacter
+                }
             >
-                    {props.index ? 'Editar' : 'Agregar'} personaje
+                    {isUpdating() ? 'Editar' : 'Agregar'} personaje
             </button>
         </>
     )

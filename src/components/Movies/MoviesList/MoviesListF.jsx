@@ -126,6 +126,21 @@ function MoviesList() {
         setMovies(movies_)
     }
 
+    const handleUpdateCharacter = (updatedCharacter, characterIndex, movieIndex) => {
+        const movie = movies[movieIndex]
+        const character = movie.characters[characterIndex]
+        movies[movieIndex].characters[characterIndex] = Object.assign(character, updatedCharacter)
+        setMovies(movies)
+    }
+
+    const handleDeleteCharacter = (characterIndex, movieIndex) => {
+        if (window.confirm('¿Estás seguro de eliminar este personaje?')) {
+            const m = [...movies]
+            m[movieIndex].characters.splice(characterIndex, 1)
+            setMovies(m)
+        }
+    }
+
     return (
         <>
             <MovieForm
@@ -144,6 +159,8 @@ function MoviesList() {
                         handleSelectMovie={handleSelectMovie}
                         handleDeleteMovie={handleDeleteMovie}
                         handleAddCharacter={handleAddCharacter}
+                        handleUpdateCharacter={handleUpdateCharacter}
+                        handleDeleteCharacter={handleDeleteCharacter}
                     />
                 )
                 : <img
